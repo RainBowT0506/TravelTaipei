@@ -62,6 +62,8 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.title = resources.getString(R.string.app_name)
+
         initRvAttraction()
         viewModel.attraction.observe(viewLifecycleOwner, Observer {
             (binding.rvAttraction.adapter as AttractionAdapter).setData(it.data.toMutableList())

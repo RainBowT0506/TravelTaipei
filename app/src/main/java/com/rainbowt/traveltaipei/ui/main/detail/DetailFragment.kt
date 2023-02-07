@@ -45,6 +45,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
         super.onViewCreated(view, savedInstanceState)
         var detail = viewModel.detail.value
 
+        activity?.title = detail?.name
+
         initDetailPage(detail)
     }
 
