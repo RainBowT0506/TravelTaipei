@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tw"
+        android:title="zh-tw" />
+    <item
+        android:id="@+id/cn"
+        android:title="zh-cn" />
+    <item
+        android:id="@+id/en"
+        android:title="en" />
+    <item
+        android:id="@+id/ja"
+        android:title="ja" />
+    <item
+        android:id="@+id/ko"
+        android:title="ko" />
+    <item
+        android:id="@+id/es"
+        android:title="es" />
+    <item
+        android:id="@+id/id"
+        android:title="id" />
+    <item
+        android:id="@+id/th"
+        android:title="th" />
+    <item
+        android:id="@+id/vi"
+        android:title="vi" />
+</menu>
