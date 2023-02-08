@@ -11,11 +11,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rainbowt.traveltaipei.data.api.RemoteDataSource
 import com.rainbowt.traveltaipei.data.repository.BaseRepository
+import com.rainbowt.traveltaipei.ui.main.MainActivity
 import com.rainbowt.traveltaipei.viewmodel.ViewModelFactory
 
 abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel> : Fragment() {
 
-    protected lateinit var binding : B
+    protected lateinit var binding: B
     protected lateinit var viewModel: VM
 
     var remoteDataSource = RemoteDataSource()
@@ -23,7 +24,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel> : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = ViewModelFactory(getRepository())
-        viewModel = ViewModelProvider(this,factory)[getViewModel()]
+        viewModel = ViewModelProvider(this, factory)[getViewModel()]
     }
 
     override fun onCreateView(
@@ -32,12 +33,28 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
+        initToolBar()
+        initViews()
         return binding.root
     }
 
-    abstract fun getLayoutId():Int
+    abstract fun initToolBar()
+    abstract fun initViews()
 
-    abstract fun getViewModel() : Class<VM>
+    abstract fun getLayoutId(): Int
 
-    abstract fun getRepository() : BaseRepository
+    abstract fun getViewModel(): Class<VM>
+
+    abstract fun getRepository(): BaseRepository
+
+    fun setTitleText(title: CharSequence, resColor: Int) {
+        (activity as MainActivity).setTitleText(title, resColor)
+    }
+
+    fun hideLeftContentIcon(){
+        (activity as MainActivity).hideLeftContentIcon()
+    }
+    fun setLeftContentIcon(res: Int , onClick:()->Unit) {
+        (activity as MainActivity).setLeftContentIcon(res,onClick)
+    }
 }

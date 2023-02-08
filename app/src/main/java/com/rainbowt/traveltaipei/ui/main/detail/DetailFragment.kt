@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -33,18 +34,38 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(false)
         arguments?.let {
-            viewModel.detail.value =  it.getParcelable(TAG)
+            viewModel.detail.value = it.getParcelable(TAG)
         }
+
+    }
+
+    override fun initToolBar() {
+        viewModel.detail.value?.name?.let {
+            setTitleText(
+                it,
+                ContextCompat.getColor(requireContext(), R.color.white)
+            )
+        }
+        setLeftContentIcon(R.drawable.ic_arrow_back_left_24,
+            onClick = {
+                activity?.onBackPressed()
+            }
+        )
+    }
+
+    override fun initViews() {
+        val detail = viewModel.detail.value
+        initDetailPage(detail)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val detail = viewModel.detail.value
+//        val detail = viewModel.detail.value
 
-        initToolbar(detail)
+//        initToolbar(detail)
 
-        initDetailPage(detail)
+//        initDetailPage(detail)
     }
 
     private fun initToolbar(detail: Detail?) {

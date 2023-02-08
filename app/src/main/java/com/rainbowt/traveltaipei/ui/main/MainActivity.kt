@@ -2,15 +2,20 @@ package com.rainbowt.traveltaipei.ui.main
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import com.rainbowt.traveltaipei.R
-import com.rainbowt.traveltaipei.ui.main.attraction.AttractionFragment
+import com.rainbowt.traveltaipei.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -38,6 +43,26 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             supportFragmentManager.popBackStack()
+        }
+    }
+
+    fun setTitleText(title: CharSequence,resColor:Int){
+        binding.layoutToolbar.tvTitle.text = title
+        binding.layoutToolbar.tvTitle.setTextColor(resColor)
+        binding.layoutToolbar.tvTitle.visibility = View.VISIBLE
+        binding.layoutToolbar.ivTitle.visibility = View.GONE
+    }
+
+    fun hideLeftContentIcon(){
+        binding.layoutToolbar.leftIcon.setImageResource(0)
+        binding.layoutToolbar.leftIcon.visibility = View.INVISIBLE
+        binding.layoutToolbar.leftIcon.setOnClickListener(null)
+    }
+    fun setLeftContentIcon(res : Int,onClick:()->Unit){
+        binding.layoutToolbar.leftIcon.setImageResource(res)
+        binding.layoutToolbar.leftIcon.visibility = View.VISIBLE
+        binding.layoutToolbar.leftIcon.setOnClickListener {
+            onClick.invoke()
         }
     }
 }

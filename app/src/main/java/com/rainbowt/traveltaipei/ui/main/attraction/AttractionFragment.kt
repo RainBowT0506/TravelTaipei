@@ -3,6 +3,7 @@ package com.rainbowt.traveltaipei.ui.main.attraction
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,6 +20,17 @@ import com.rainbowt.traveltaipei.ui.main.detail.DetailFragment.Companion.TAG
 
 class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionModel>() {
 
+    override fun initToolBar() {
+        setTitleText(
+            resources.getString(R.string.app_name),
+            ContextCompat.getColor(requireContext(), R.color.white)
+        )
+        hideLeftContentIcon()
+    }
+
+    override fun initViews() {
+        initRvAttraction()
+    }
 
     override fun getLayoutId() = R.layout.fragment_attraction
 
@@ -60,9 +72,6 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = resources.getString(R.string.app_name)
-
-        initRvAttraction()
         viewModel.attraction.observe(viewLifecycleOwner, Observer {
             (binding.rvAttraction.adapter as AttractionAdapter).setData(it.data.toMutableList())
         })
