@@ -46,6 +46,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
                 activity?.onBackPressed()
             }
         )
+        hideRightContentIcon()
     }
 
     override fun initViews() {
@@ -87,6 +88,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
             putString(WebFragment.URL, detail?.officialSite)
         }
         findNavController().navigate(R.id.detail_to_web, bundle)
+        //  cause WebFragment not extend BaseFragment
+        hideRightContentIcon()
     }
 
 

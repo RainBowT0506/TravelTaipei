@@ -25,7 +25,6 @@ class WebFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentWebBinding.inflate(LayoutInflater.from(context))
-        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.webview.loadUrl(if (url == null) GOOGLE_URL else url!!)
         return binding.root
     }
