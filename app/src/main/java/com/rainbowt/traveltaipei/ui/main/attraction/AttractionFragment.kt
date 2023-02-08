@@ -17,6 +17,7 @@ import com.rainbowt.traveltaipei.data.model.Detail
 import com.rainbowt.traveltaipei.databinding.FragmentAttractionBinding
 import com.rainbowt.traveltaipei.ui.base.BaseFragment
 import com.rainbowt.traveltaipei.ui.main.detail.DetailFragment.Companion.TAG
+import com.rainbowt.traveltaipei.utils.showLangSelectionDialog
 
 class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionModel>() {
 
@@ -26,6 +27,11 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
             ContextCompat.getColor(requireContext(), R.color.white)
         )
         hideLeftContentIcon()
+        showRightContentIcon(R.drawable.ic_language_24, onClick = {
+            requireContext().showLangSelectionDialog(onClick = { lang->
+                changeLang(lang)
+            })
+        })
     }
 
     override fun initViews() {
@@ -40,34 +46,9 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
         remoteDataSource.buildApi(TravelTaipeiApi::class.java)
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.tw -> changeLang("zh-tw")
-            R.id.cn -> changeLang("zh-cn")
-            R.id.en -> changeLang("en")
-            R.id.ja -> changeLang("ja")
-            R.id.ko -> changeLang("ko")
-            R.id.es -> changeLang("es")
-            R.id.id -> changeLang("id")
-            R.id.th -> changeLang("th")
-            R.id.vi -> changeLang("vi")
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun changeLang(languageCode: String) {
         Constants.languageCode = languageCode
         viewModel.getAttractions()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

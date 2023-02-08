@@ -17,22 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.tw -> return super.onOptionsItemSelected(item)
-            R.id.cn -> return super.onOptionsItemSelected(item)
-            R.id.en -> return super.onOptionsItemSelected(item)
-            R.id.ja -> return super.onOptionsItemSelected(item)
-            R.id.ko -> return super.onOptionsItemSelected(item)
-            R.id.es -> return super.onOptionsItemSelected(item)
-            R.id.id -> return super.onOptionsItemSelected(item)
-            R.id.th -> return super.onOptionsItemSelected(item)
-            R.id.vi -> return super.onOptionsItemSelected(item)
-            else -> onBackPressed()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onBackPressed() {
         val count = supportFragmentManager.backStackEntryCount
         if (count == 1) {
