@@ -1,11 +1,14 @@
 package com.rainbowt.traveltaipei.ui.main.detail
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.rainbowt.traveltaipei.*
 import com.rainbowt.traveltaipei.data.api.TravelTaipeiApi
@@ -30,24 +33,23 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(false)
         arguments?.let {
-            viewModel.detail.value = Detail(
-                imageUrl = it.getString(IMAGE_URL),
-                name = it.getString(NAME),
-                introduction = it.getString(INTRODUCTION),
-                address = it.getString(ADDRESS),
-                lastUpdatedTime = it.getString(LAST_UPDATED_TIME),
-                officialSite = it.getString(OFFICIAL_SITE),
-            )
+            viewModel.detail.value =  it.getParcelable(TAG)
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var detail = viewModel.detail.value
+        val detail = viewModel.detail.value
 
-        activity?.title = detail?.name
+        initToolbar(detail)
 
         initDetailPage(detail)
+    }
+
+    private fun initToolbar(detail: Detail?) {
+        activity?.title = detail?.name
+        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initDetailPage(detail: Detail?) {
@@ -65,34 +67,14 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
     }
 
     private fun jumpToWebFragment(detail: Detail?) {
-        (context as FragmentActivity).supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container, WebFragment.newInstance(detail?.officialSite))
-            .addToBackStack(detail?.officialSite)
-            .commit()
+        val bundle = Bundle().apply {
+            putString(WebFragment.URL, detail?.officialSite)
+        }
+        findNavController().navigate(R.id.detail_to_web, bundle)
     }
 
 
     companion object {
-        private const val IMAGE_URL = "image_url"
-        private const val NAME = "name"
-        private const val INTRODUCTION = "introduction"
-        private const val ADDRESS = "address"
-        private const val LAST_UPDATED_TIME = "last_updated_time"
-        private const val OFFICIAL_SITE = "official_site"
-
-        @JvmStatic
-        fun newInstance(detail: Detail
-        ) =
-            DetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(IMAGE_URL, detail.imageUrl)
-                    putString(NAME, detail.name)
-                    putString(INTRODUCTION, detail.introduction)
-                    putString(ADDRESS, detail.address)
-                    putString(LAST_UPDATED_TIME, detail.lastUpdatedTime)
-                    putString(OFFICIAL_SITE, detail.officialSite)
-                }
-            }
+        val TAG = DetailFragment::class.java.toString()
     }
 }

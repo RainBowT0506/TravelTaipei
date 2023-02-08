@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.rainbowt.traveltaipei.Constants.GOOGLE_URL
@@ -22,24 +23,14 @@ class WebFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentWebBinding.inflate(LayoutInflater.from(context))
+        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.webview.loadUrl(if (url == null) GOOGLE_URL else url!!)
         return binding.root
     }
 
     companion object {
         const val URL = "url"
-
-        @JvmStatic
-        fun newInstance(url: String?) =
-            WebFragment().apply {
-                arguments = Bundle().apply {
-                    putString(URL, url)
-                }
-            }
     }
 }

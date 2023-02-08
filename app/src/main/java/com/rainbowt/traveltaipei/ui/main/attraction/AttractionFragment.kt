@@ -3,10 +3,8 @@ package com.rainbowt.traveltaipei.ui.main.attraction
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rainbowt.traveltaipei.R
@@ -17,7 +15,7 @@ import com.rainbowt.traveltaipei.data.model.Data
 import com.rainbowt.traveltaipei.data.model.Detail
 import com.rainbowt.traveltaipei.databinding.FragmentAttractionBinding
 import com.rainbowt.traveltaipei.ui.base.BaseFragment
-import com.rainbowt.traveltaipei.ui.main.detail.DetailFragment
+import com.rainbowt.traveltaipei.ui.main.detail.DetailFragment.Companion.TAG
 
 class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionModel>() {
 
@@ -74,7 +72,7 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
     private fun initRvAttraction() {
         binding.rvAttraction.adapter = AttractionAdapter(context,
             onItemClick = {
-                jumpToDetailFragment(it)
+                navToDetailFragment(it)
             }
         )
         binding.rvAttraction.layoutManager = LinearLayoutManager(context)
@@ -87,28 +85,17 @@ class AttractionFragment : BaseFragment<FragmentAttractionBinding, AttractionMod
         )
     }
 
-    private fun jumpToDetailFragment(it: Data) {
-        (context as FragmentActivity).supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.container, DetailFragment.newInstance(
-                    Detail(
-                        if (it?.images?.size != null && it.images.isNotEmpty()) (it.images.get(0).src!!) else null,
-                        it?.name!!,
-                        it.introduction!!,
-                        it.address!!,
-                        it.modified!!,
-                        it.official_site!!
-                    )
-
-                )
-            )
-            .addToBackStack(it.name)
-            .commit()
-        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    private fun navToDetailFragment(attraction: Data) {
+        val detail = Detail(
+            if (attraction.images.isNotEmpty()) (attraction.images[0].src!!) else null,
+            attraction.name!!,
+            attraction.introduction!!,
+            attraction.address!!,
+            attraction.modified!!,
+            attraction.official_site!!
+        )
+        val bundle = Bundle().apply { putParcelable(TAG, detail) }
+        findNavController().navigate(R.id.attraction_to_detail, bundle)
     }
 
-    companion object {
-        fun newInstance() = AttractionFragment()
-    }
 }
