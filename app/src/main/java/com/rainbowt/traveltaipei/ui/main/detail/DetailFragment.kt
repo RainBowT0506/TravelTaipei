@@ -1,16 +1,11 @@
 package com.rainbowt.traveltaipei.ui.main.detail
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.rainbowt.traveltaipei.*
 import com.rainbowt.traveltaipei.data.api.TravelTaipeiApi
 import com.rainbowt.traveltaipei.data.model.Detail
@@ -46,7 +41,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
                 ContextCompat.getColor(requireContext(), R.color.white)
             )
         }
-        setLeftContentIcon(R.drawable.ic_arrow_back_left_24,
+        showLeftContentIcon(R.drawable.ic_arrow_back_left_24,
             onClick = {
                 activity?.onBackPressed()
             }

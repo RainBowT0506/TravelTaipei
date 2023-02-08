@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.rainbowt.traveltaipei.R
 import com.rainbowt.traveltaipei.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,23 +45,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setTitleText(title: CharSequence,resColor:Int){
+    fun setTitleText(title: CharSequence, resColor: Int) {
         binding.layoutToolbar.tvTitle.text = title
         binding.layoutToolbar.tvTitle.setTextColor(resColor)
         binding.layoutToolbar.tvTitle.visibility = View.VISIBLE
         binding.layoutToolbar.ivTitle.visibility = View.GONE
     }
 
-    fun hideLeftContentIcon(){
-        binding.layoutToolbar.leftIcon.setImageResource(0)
-        binding.layoutToolbar.leftIcon.visibility = View.INVISIBLE
-        binding.layoutToolbar.leftIcon.setOnClickListener(null)
-    }
-    fun setLeftContentIcon(res : Int,onClick:()->Unit){
+    fun showLeftContentIcon(res: Int, onClick: () -> Unit) {
         binding.layoutToolbar.leftIcon.setImageResource(res)
         binding.layoutToolbar.leftIcon.visibility = View.VISIBLE
         binding.layoutToolbar.leftIcon.setOnClickListener {
             onClick.invoke()
         }
     }
+
+    fun hideLeftContentIcon() {
+        binding.layoutToolbar.leftIcon.setImageResource(0)
+        binding.layoutToolbar.leftIcon.visibility = View.INVISIBLE
+        binding.layoutToolbar.leftIcon.setOnClickListener(null)
+    }
+
+    fun showRightContentIcon(res: Int, onClick: () -> Unit) {
+        binding.layoutToolbar.rightIcon.setImageResource(res)
+        binding.layoutToolbar.rightIcon.visibility = View.VISIBLE
+        binding.layoutToolbar.rightIcon.setOnClickListener {
+            onClick.invoke()
+        }
+    }
+
+    fun hideRightContentIcon() {
+        binding.layoutToolbar.rightIcon.setImageResource(0)
+        binding.layoutToolbar.rightIcon.visibility = View.INVISIBLE
+        binding.layoutToolbar.rightIcon.setOnClickListener(null)
+    }
+
 }

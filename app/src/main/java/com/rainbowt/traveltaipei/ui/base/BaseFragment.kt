@@ -51,10 +51,19 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel> : Fragment() {
         (activity as MainActivity).setTitleText(title, resColor)
     }
 
-    fun hideLeftContentIcon(){
+    fun showLeftContentIcon(res: Int, onClick: () -> Unit) {
+        (activity as MainActivity).showLeftContentIcon(res, onClick)
+    }
+
+    fun hideLeftContentIcon() {
         (activity as MainActivity).hideLeftContentIcon()
     }
-    fun setLeftContentIcon(res: Int , onClick:()->Unit) {
-        (activity as MainActivity).setLeftContentIcon(res,onClick)
+
+    fun showRightContentIcon(res: Int, onClick: () -> Unit) {
+        (activity as MainActivity).showRightContentIcon(res, onClick)
+    }
+
+    fun hideRightContentIcon() {
+        (activity as MainActivity).hideRightContentIcon()
     }
 }
