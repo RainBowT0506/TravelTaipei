@@ -55,20 +55,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        val detail = viewModel.detail.value
-
-//        initToolbar(detail)
-
-//        initDetailPage(detail)
-    }
-
-    private fun initToolbar(detail: Detail?) {
-        activity?.title = detail?.name
-        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     private fun initDetailPage(detail: Detail?) {
         loadImage(binding.image, detail?.imageUrl)
         binding.title.text = detail?.name
@@ -88,8 +74,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailModel>() {
             putString(WebFragment.URL, detail?.officialSite)
         }
         findNavController().navigate(R.id.detail_to_web, bundle)
-        //  cause WebFragment not extend BaseFragment
-        hideRightContentIcon()
     }
 
 
